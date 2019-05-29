@@ -1,4 +1,6 @@
 from utils import *
+
+
 class RBNode(object):
 
     def __init__(self, data, key, occ, color):
