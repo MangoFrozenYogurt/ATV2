@@ -50,9 +50,9 @@ def addtods():
         mytree = AVLTree()
         raiz = None
         inp = int(0)
-        while inp < 7:
-            print("AVL-tree >\nEscolha uma opção: \n1 - Inserir\n2 - PreOrdem\n3 - InOrdem\n4 - PosOrdem\n"
-                  "5 - Remover\n6 - Pesquisar\n7 - Interromper execução\n")
+        while inp < 5:
+            print("AVL-tree >\nEscolha uma opção: \n1 - Inserir\n2 - Imprimir\n"
+                  "3 - Remover\n4 - Pesquisar\n5 - Interromper execução\n")
             inp = int(input(""))
 
             if inp == 1:
@@ -65,34 +65,25 @@ def addtods():
 
             if inp == 2:
                 if inserted:
-                    mytree.preorder(raiz)
+                    mytree.sortedlist(raiz)
                     print("\n")
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
 
             if inp == 3:
                 if inserted:
-                    mytree.inorder(raiz)
-                    print("\n")
-                else:
-                    print("a arvore está vazia insira um conjunto de elementos\n")
-            if inp == 4:
-                if inserted:
-                    mytree.posorder(raiz)
-                    print("\n")
-                else:
-                    print("a arvore está vazia insira um conjunto de elementos\n")
-            if inp == 5:
-                if inserted:
                     val = input("Insira a chave do nodo a ser removido: \n")
                     mytree.delete(raiz, val)
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
-            if inp == 6:
+            if inp == 4:
                 if inserted:
                     val = input("Insira a chave do nodo para ser pesquisado: \n")
-                    print("chave > ", mytree.search(raiz, val).key, "dado > ", mytree.search(raiz, val).data)
-
+                    if mytree.search(raiz, val):
+                        print("A chave está na arvore\n")
+                    else:
+                        print("chave não encontrada, adicionando...")
+                        mytree.insert(raiz, val, 0)
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
     # Árvore Rubro-negra -----------------------------------------------------------------------------------------------
@@ -101,7 +92,7 @@ def addtods():
         mytree = RBtree()
         inp = int(0)
         while inp < 5:
-            print("RB-tree >\nEscolha uma opção:\n1 - Inserir\n2 - PreOrdem\n3 - Pesquisar\n4 - Remover\n"
+            print("RB-tree >\nEscolha uma opção:\n1 - Inserir\n2 - Imprimir\n3 - Pesquisar\n4 - Remover\n"
                   "5 - Interromper execução\n")
             inp = int(input(""))
 
@@ -115,7 +106,7 @@ def addtods():
 
             if inp == 2:
                 if inserted:
-                    mytree.preorder(mytree.root)
+                    mytree.sortedlist()
                     print("\n")
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
@@ -123,8 +114,11 @@ def addtods():
             if inp == 3:
                 if inserted:
                     val = input("Insira a chave do nodo para ser pesquisado: \n")
-                    print("chave > ", mytree.search(val).key, "dado > ", mytree.search(val).data)
-
+                    if mytree.search(val):
+                        print("A chave está na arvore\n")
+                    else:
+                        print("chave não encontrada, adicionando...")
+                        mytree.insert(val, 0)
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
 
@@ -146,14 +140,13 @@ def addtods():
             if inp == 1:
                 w = listwords(arquivo)
                 for i in w:
-                    print(i, "\n")
                     ne = InNode(i, ordstring(i), occurences(i, arquivo))
                     mytree.insert(ne)
                     inserted = True
 
             if inp == 2:
                 if inserted:
-                   mytree.print_order()
+                   mytree.sortedlist()
                    print("\n")
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
@@ -167,7 +160,11 @@ def addtods():
             if inp == 3:
                 if inserted:
                     val = input("Insira a chave do nodo para ser pesquisado: \n")
-                    mytree.search(val, ordstring(val))
+                    if mytree.search(val):
+                        print("a chave está na árvore\n")
+                    else:
+                        print("a chave não foi encontrada, adicionando...")
+                        mytree.insert(InNode(val, ordstring(val), 0))
 
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")

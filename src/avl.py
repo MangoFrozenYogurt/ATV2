@@ -47,15 +47,21 @@ class AVLTree(object):
         return self.leftRotate(k3)
 
     def search(self, tree, dat):
+        found = False
+
         key = ordstring(dat)
-        if tree.data is None:
-            return AVLTree()
+        if tree is None and not found:
+            print("chave não encontrada, adicionando à árvore...\n")
+            return False
 
         if tree.key == key and tree.data == dat:
-            return tree
+            found = True
+            print("chave está na árvore\n")
+            tree.occ += 1
+            return True
         elif key < tree.key:
             return self.search(tree.left, dat)
-        else:
+        elif key > tree.key:
             return self.search(tree.right, dat)
 
     def insert(self, root, data, occ):
@@ -178,3 +184,19 @@ class AVLTree(object):
         self.preorder(root.left)
         self.preorder(root.right)
         print("{0} ".format(root.key), "{0} ".format(root.data), end="")
+
+    def generatelist(self, root, l):
+        x = root
+        if x is None:
+            return
+
+        l.append(x)
+        self.generatelist(x.left, l)
+        self.generatelist(x.right, l)
+
+    def sortedlist(self, root):
+        l = []
+        self.generatelist(root, l)
+        ordenar(l, False)
+        for i in l:
+            print("|", i.data, "ocorrencia: ", i.occ, "|\n")

@@ -47,7 +47,7 @@ class Bnode(object):
 
     def add_key(self, node):
         self.keys.append(node)
-        self.keys = ordenar(self.keys)
+        self.keys = ordenar(self.keys, True)
 
     def add_child(self, node):
         i = len(self.children) - 1
@@ -95,7 +95,6 @@ class Btree(object):
                     raiz = next_
 
             # todos os nós cheios foram divididos, inserir nó
-            print("entrou aqui\n")
             raiz.add_key(node)
 
     def search(self, data, tree=None):
@@ -105,6 +104,7 @@ class Btree(object):
         for j in range(len(tree.keys)):
             if tree.keys[j].key == val and tree.keys[j].data:
                 print("Está na árvore\n")
+                tree.keys[j].occ += 1
                 return True
             elif tree.leaf:
                 print("Não está na árvore\n")
@@ -127,3 +127,19 @@ class Btree(object):
                     output += "|" + str(i.data) + " " + str(i.occ) + "|\n"
             print(output)
             this_level = next_level
+
+    def sortedlist(self):
+        l = []
+        this_level = [self.root]
+        while this_level:
+            next_level = []
+            output = ""
+            for node in this_level:
+                if node.children:
+                    next_level.extend(node.children)
+                for i in node.keys:
+                    l.append(i)
+            this_level = next_level
+        ordenar(l, False)
+        for j in l:
+            print("|", j.data, " ocorrencia: ", j.occ, "|")

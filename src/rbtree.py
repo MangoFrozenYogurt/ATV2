@@ -23,11 +23,17 @@ class RBtree(object):
 
     def search_helper(self, root, data):
         key = ordstring(data)
-        if root == self.nil or data == root.data:
-            return root
+        found = False
+        if data == root.data:
+            print("chave está na arvore\n")
+            root.occ += 1
+            return True
+        elif root == self.nil or root is None:
+            print("chave não encontrada\n")
+            return False
         elif key < root.key:
             return self.search_helper(root.left, data)
-        else:
+        elif key > root.key:
             return self.search_helper(root.right, data)
 
     def getminkeynode(self, root):
@@ -293,6 +299,22 @@ class RBtree(object):
         x = root
         if x == self.nil:
             return
-        print("{0} ".format(x.key), "{0} ".format(x.data), end="")
+        print("|", x.data," ocorrencia: ", x.occ, "|\n")
         self.preorder(x.left)
         self.preorder(x.right)
+
+    def generatelist(self, root, l):
+        x = root
+        if x == self.nil or x is None:
+            return
+
+        l.append(x)
+        self.generatelist(x.left, l)
+        self.generatelist(x.right, l)
+
+    def sortedlist(self):
+        l = []
+        self.generatelist(self.root, l)
+        ordenar(l, False)
+        for i in l:
+            print("|", i.data, "ocorrencia: ", i.occ, "|\n")

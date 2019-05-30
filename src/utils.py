@@ -87,7 +87,43 @@ def merge_sort(colecao):
     return colecao
 
 
-def ordenar(colecao):
-    return merge_sort(colecao)
+def heapfy(colecao, n, r):
+    menor = r
+    esq = 2 * r + 1
+    dir = 2 * r + 2
+
+    # se filho existe e é menor que o pai
+    if esq < n and int(colecao[esq].occ) < int(colecao[menor].occ):
+        menor = esq
+
+    if dir < n and int(colecao[dir].occ) < int(colecao[menor].occ):
+        menor = dir
+
+    # trocar raiz se necessario
+    if menor != r:
+        colecao[r], colecao[menor] = colecao[menor], colecao[r]
+
+        # heapfy
+        heapfy(colecao, n, menor)
+
+
+def heapsort(colecao):
+    n = len(colecao)
+
+    for i in range(n, -1, -1):
+        heapfy(colecao, n, i)
+
+    for i in range(n - 1, 0, -1):
+        colecao[i], colecao[0] = colecao[0], colecao[i]
+        heapfy(colecao, i, 0)
+
+    return colecao
+
+
+def ordenar(colecao, f):
+    if f:
+        return merge_sort(colecao)
+    else:
+        return heapsort(colecao)
 
 # print(occurences('primeira', '../textfiles/teste1.txt'))

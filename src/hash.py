@@ -69,11 +69,12 @@ class Hash(object):
             pos = self.function(key, len(self.listElem), j)
             for i in range(len(self.listElem[pos].elem)):
                 if self.listElem[pos].elem[i].key == key and self.listElem[pos].elem[i].data == data:
+                    self.listElem[pos].elem[i].occ += 1
                     print("hashelem: chave > ", self.listElem[pos].elem[i].data, " ocorrencia > ",
                           self.listElem[pos].elem[i].occ)
                     found = True
                 elif j >= 3 and not found:
-                    print("chave não encontrada")
+                    print("chave não encontrada, adicionando à tabela...")
                     nw = Node()
                     nw.create(data, ordstring(data), nw.occ + 1)
                     return self.insert(nw)
