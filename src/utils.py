@@ -1,4 +1,21 @@
+def tolowerall(file):
+
+    arq = open(file, 'r')
+
+    str = arq.readlines()
+
+    for i in range(len(str)):
+        str[i] = str[i].lower()
+
+    arq.close()
+    fil = open(file, 'w')
+
+    for j in str:
+        fil.write(j)
+
+
 def listwords(file):
+    tolowerall(file)
     arq = open(file)
     words = []
     for i in arq:
@@ -126,4 +143,5 @@ def ordenar(colecao, f):
     else:
         return heapsort(colecao)
 
-# print(occurences('primeira', '../textfiles/teste1.txt'))
+
+# tolowerall('../textfiles/teste2.txt')

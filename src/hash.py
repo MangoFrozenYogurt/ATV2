@@ -93,6 +93,17 @@ class Hash(object):
 
         print("\n")
 
+    def sortedlist(self):
+        l = []
+        for i in self.listElem:
+            for j in i.elem:
+                l.append(j)
+
+        heapsort(l)
+        for x in l:
+            if x.data is not None:
+                print("|", "palavra: ", x.data, " ocorrencia: ", x.occ, "|")
+
     def remove(self, key):
         found = False
         i = int(0)

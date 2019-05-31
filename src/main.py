@@ -8,42 +8,69 @@ import math
 
 def addtods():
     arquivo = ''
-    chfile = int(input("ESCOLHA UM ARQUIVO: \n1 - teste1.txt\n"))
+    chfile = int(input("ESCOLHA UM ARQUIVO: \n1 - teste1.txt\n2 - teste2.txt\n3 - loremipsum.txt\n"))
 
     # seleção de arquivo -----------------------------------------------------------------------------------------------
 
     if chfile == 1:
         arquivo = '../textfiles/teste1.txt'
 
+    elif chfile == 2:
+        arquivo = '../textfiles/teste2.txt'
+    elif chfile == 3:
+        arquivo = '../textfiles/loremipsum.txt'
+    else:
+        print("você não selecionou nada\nparando execução\npense calmamente e execute novamente\n")
+        return
+
     # seleção de estrutura de dados ------------------------------------------------------------------------------------
 
     chds = int(input("ESCOLHA UMA OPÇÃO: \n1 - Hash\n2 - AVL-tree\n3 - RB-tree\n4 - B-tree\n"))
     if chds == 1:
-        hasht = Hash((int(math.floor(numwords(arquivo)/2) - 5)))
+        tam = int(0)
+
+        if numwords(arquivo) < 5:
+            tam = 2
+        else:
+            tam = int(math.floor(numwords(arquivo) / 2) - 5)
+
+        hasht = Hash(tam)
 
     # opções internas dos algoritmos -----------------------------------------------------------------------------------
         inp = int(0)
     # HASH -------------------------------------------------------------------------------------------------------------
+        inserted = False
         while inp < 5:
             inp = int(input("HASH > ESCOLHA UMA OPÇÃO: \n1 - Adicionar\n2 - Consultar\n3 - Remover\n4 - Imprimir\n"
-                            "5 - Interroper execução\n"))
+                            "5 ou maior - Interroper execução\n"))
             if inp == 1:
                 list = listwords(arquivo)
                 for i in list:
-                    no = Node()
-                    no.create(i, ordstring(i), occurences(i, arquivo))
-                    hasht.insert(no)
+                    if len(i) >= 4:
+                        no = Node()
+                        no.create(i, ordstring(i), occurences(i, arquivo))
+                        hasht.insert(no)
+                inserted = True
 
             if inp == 2:
-                chave = input("Insira uma palavra para ser pesquisada na tabela:\n")
-                hasht.search(ordstring(chave), chave)
+                if inserted:
+                    chave = input("Insira uma palavra para ser pesquisada na tabela:\n")
+                    hasht.search(ordstring(chave), chave)
+                else:
+                    print("tabela vazia, insira algo na tabela\n")
 
             if inp == 3:
-                chave = ordstring(input("Insira a palavra que você deseja remover:\n"))
-                hasht.remove(chave)
+                if inserted:
+                    chave = ordstring(input("Insira a palavra que você deseja remover:\n"))
+                    hasht.remove(chave)
+                else:
+                    print("tabela vazia, insira algo na tabela\n")
 
             if inp == 4:
-                hasht.printall()
+                if inserted:
+                    hasht.sortedlist()
+                else:
+                    print("tabela vazia, insira algo na tabela\n")
     # Árvore AVL -------------------------------------------------------------------------------------------------------
     elif chds == 2:
         inserted = False
@@ -52,16 +79,17 @@ def addtods():
         inp = int(0)
         while inp < 5:
             print("AVL-tree >\nEscolha uma opção: \n1 - Inserir\n2 - Imprimir\n"
-                  "3 - Remover\n4 - Pesquisar\n5 - Interromper execução\n")
+                  "3 - Remover\n4 - Pesquisar\n5 ou maior - Interromper execução\n")
             inp = int(input(""))
 
             if inp == 1:
                 list = listwords(arquivo)
                 for i in list:
-                    dat = i
-                    oc = occurences(i, arquivo)
-                    raiz = mytree.insert(raiz, dat, oc)
-                    inserted = True
+                    if len(i) >= 4:
+                        dat = i
+                        oc = occurences(i, arquivo)
+                        raiz = mytree.insert(raiz, dat, oc)
+                inserted = True
 
             if inp == 2:
                 if inserted:
@@ -93,16 +121,17 @@ def addtods():
         inp = int(0)
         while inp < 5:
             print("RB-tree >\nEscolha uma opção:\n1 - Inserir\n2 - Imprimir\n3 - Pesquisar\n4 - Remover\n"
-                  "5 - Interromper execução\n")
+                  "5 ou maior - Interromper execução\n")
             inp = int(input(""))
 
             if inp == 1:
                 list = listwords(arquivo)
                 for i in list:
-                    dat = i
-                    oc = occurences(i, arquivo)
-                    mytree.insert(dat, oc)
-                    inserted = True
+                    if len(i) >= 4:
+                        dat = i
+                        oc = occurences(i, arquivo)
+                        mytree.insert(dat, oc)
+                inserted = True
 
             if inp == 2:
                 if inserted:
@@ -134,15 +163,17 @@ def addtods():
         mytree = Btree(3)
         inp = int(0)
         while inp < 4:
-            print("B-tree > \nEscolha uma opção: \n1 - Inserir\n2 - Imprimir\n3 - Pesquisar\n4 - Interromper execução\n")
+            print("B-tree > \nEscolha uma opção: \n1 - Inserir\n2 - Imprimir\n3 - Pesquisar\n"
+                  "4 ou maior - Interromper execução\n")
             inp = int(input(""))
 
             if inp == 1:
                 w = listwords(arquivo)
                 for i in w:
-                    ne = InNode(i, ordstring(i), occurences(i, arquivo))
-                    mytree.insert(ne)
-                    inserted = True
+                    if len(i) >= 4:
+                        ne = InNode(i, ordstring(i), occurences(i, arquivo))
+                        mytree.insert(ne)
+                inserted = True
 
             if inp == 2:
                 if inserted:
@@ -168,4 +199,9 @@ def addtods():
 
                 else:
                     print("a arvore está vazia insira um conjunto de elementos\n")
+    else:
+        print("você não selecionou nada\nparando execução\npense calmamente e execute novamente\n")
+        return
+
+
 addtods()
